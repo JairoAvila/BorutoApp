@@ -1,6 +1,10 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    id(AppDependencies.androidApplication)
+    id(AppDependencies.androidKotlin)
+    id(AppDependencies.ksp)
+    id("kotlinx-serialization")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -47,15 +51,45 @@ android {
 
 dependencies {
 
+    // Support Libraries
     implementation(AppDependencies.coreKtx)
     implementation(AppDependencies.lifecycleKtx)
+
+    // Jetpack Compose
     implementation(AppDependencies.composeUI)
     implementation(AppDependencies.composeMaterial)
     implementation(AppDependencies.composePreview)
     implementation(AppDependencies.composeActivity)
+    implementation(AppDependencies.navigation)
+    debugImplementation(AppDependencies.composeTooling)
+
+    // Room
+    implementation(AppDependencies.roomRuntime)
+    ksp(AppDependencies.roomCompiler)
+
+    // Paging
+    implementation(AppDependencies.paging)
+
+    // Ktor
+    implementation(AppDependencies.ktor)
+    implementation(AppDependencies.ktorSerialization)
+    implementation(AppDependencies.kotlinSerialization)
+    implementation(AppDependencies.ktorLogging)
+
+    // Data Store
+    implementation(AppDependencies.dataStore)
+
+    // Hilt
+    implementation(AppDependencies.hilt)
+    kapt(AppDependencies.hiltCompiler)
+    implementation(AppDependencies.hiltCompose)
+
+    // Coil
+    implementation(AppDependencies.coil)
+
+    // Test Libraries
     testImplementation(AppDependencies.junit)
     androidTestImplementation(AppDependencies.junitTest)
     androidTestImplementation(AppDependencies.espresso)
     androidTestImplementation(AppDependencies.composeJunit)
-    debugImplementation(AppDependencies.composeTooling)
 }

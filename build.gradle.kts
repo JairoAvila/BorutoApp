@@ -1,3 +1,10 @@
+buildscript {
+    dependencies {
+        classpath(AppDependencies.kotlinSerializationPlugin)
+        classpath(AppDependencies.hiltGradle)
+    }
+}
+
 plugins {
     id(AppDependencies.androidApplication) version Versions.android apply false
     id(AppDependencies.androidLibrary) version Versions.android apply false
