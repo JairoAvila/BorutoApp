@@ -1,7 +1,6 @@
 plugins {
     id(AppDependencies.androidApplication)
     id(AppDependencies.androidKotlin)
-    id(AppDependencies.ksp)
     id("kotlinx-serialization")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
@@ -54,6 +53,7 @@ dependencies {
     // Support Libraries
     implementation(AppDependencies.coreKtx)
     implementation(AppDependencies.lifecycleKtx)
+    implementation(AppDependencies.material)
 
     // Jetpack Compose
     implementation(AppDependencies.composeUI)
@@ -65,7 +65,9 @@ dependencies {
 
     // Room
     implementation(AppDependencies.roomRuntime)
-    ksp(AppDependencies.roomCompiler)
+    implementation(AppDependencies.roomPaging)
+    kapt(AppDependencies.roomCompiler)
+    implementation(AppDependencies.roomKtx)
 
     // Paging
     implementation(AppDependencies.paging)

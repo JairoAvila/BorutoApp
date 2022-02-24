@@ -16,6 +16,7 @@ class DatabaseConverter {
         return stringBuilder.toString()
     }
 
+    @TypeConverter
     fun convertStringToList(string: String): List<String> {
         return string.split(separator)
     }

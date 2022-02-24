@@ -3,11 +3,12 @@ object AppDependencies {
     const val androidApplication = "com.android.application"
     const val androidLibrary = "com.android.library"
     const val androidKotlin = "org.jetbrains.kotlin.android"
-    const val ksp = "com.google.devtools.ksp"
+    //const val ksp = "com.google.devtools.ksp"
     const val kotlinSerializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlinSerialization}"
 
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleKtx}"
+    const val material = "com.google.android.material:material:${Versions.material}"
 
     const val composeUI = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
@@ -20,6 +21,8 @@ object AppDependencies {
 
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomPaging = "androidx.room:room-paging:${Versions.roomPaging}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 
     const val paging = "androidx.paging:paging-compose:${Versions.paging}"
 

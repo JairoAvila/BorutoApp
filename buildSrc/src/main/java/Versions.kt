@@ -7,11 +7,13 @@ object Versions {
 
     const val coreKtx = "1.7.0"
     const val lifecycleKtx = "2.4.1"
+    const val material = "1.5.0"
 
     const val activityCompose = "1.4.0"
     const val compose = "1.1.0"
     const val navigation = "2.4.1"
     const val room = "2.4.1"
+    const val roomPaging = "2.5.0-alpha01"
     const val paging = "1.0.0-alpha14"
     const val ktor = "1.6.7"
     const val dataStore = "1.0.0"
