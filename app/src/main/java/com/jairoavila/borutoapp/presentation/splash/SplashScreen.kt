@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,13 +21,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.jairoavila.borutoapp.R
+import com.jairoavila.borutoapp.navigation.Screen
 import com.jairoavila.borutoapp.ui.theme.Purple500
 import com.jairoavila.borutoapp.ui.theme.Purple700
 
 @Composable
-fun setUpAnimation(): Float {
+fun SplashScreen(
+    navController: NavHostController,
+    viewModel: SplashViewModel = hiltViewModel()
+) {
+
+    val onBoardingCompleted by viewModel.onBoardingCompleted.collectAsState()
+
     val degrees = remember { Animatable(0f) }
 
     LaunchedEffect(key1 = true) {
@@ -36,13 +46,17 @@ fun setUpAnimation(): Float {
                 delayMillis = 200
             )
         )
+        navController.popBackStack()
+        if (onBoardingCompleted) {
+            navController.navigate(Screen.Home.route)
+        } else {
+            navController.navigate(Screen.Welcome.route)
+        }
     }
 
-    return degrees.value
-}
+    Splash(degrees = degrees.value)
 
-@Composable
-fun SplashScreen(navController: NavHostController) = Splash(degrees = setUpAnimation())
+}
 
 @Composable
 fun Splash(degrees: Float) {
@@ -77,9 +91,9 @@ fun Splash(degrees: Float) {
 
 @Composable
 @Preview
-fun SplashScreenPreview() = Splash(degrees = setUpAnimation())
+fun SplashScreenPreview() = Splash(degrees = 0f)
 
 
 @Composable
 @Preview(uiMode = UI_MODE_NIGHT_YES)
-fun SplashScreenDarkPreview() = Splash(degrees = setUpAnimation())
+fun SplashScreenDarkPreview() = Splash(degrees = 0f)
