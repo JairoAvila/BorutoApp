@@ -9,6 +9,8 @@ object Versions {
     const val lifecycleKtx = "2.4.1"
     const val material = "1.5.0"
 
+    const val accompanist = "0.23.0"
+
     const val activityCompose = "1.4.0"
     const val compose = "1.1.0"
     const val navigation = "2.4.1"

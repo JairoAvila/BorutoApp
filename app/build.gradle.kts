@@ -89,6 +89,10 @@ dependencies {
     // Coil
     implementation(AppDependencies.coil)
 
+    // Pager
+    implementation(AppDependencies.accompanistPager)
+    implementation(AppDependencies.accompanistPagerIndicators)
+
     // Test Libraries
     testImplementation(AppDependencies.junit)
     androidTestImplementation(AppDependencies.junitTest)
