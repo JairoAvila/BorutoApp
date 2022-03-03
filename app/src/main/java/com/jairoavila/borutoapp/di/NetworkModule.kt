@@ -1,8 +1,12 @@
 package com.jairoavila.borutoapp.di
 
 import android.util.Log
+import androidx.paging.ExperimentalPagingApi
+import com.jairoavila.borutoapp.data.local.BorutoDatabase
 import com.jairoavila.borutoapp.data.remote.BorutoApi
 import com.jairoavila.borutoapp.data.remote.BorutoApiImpl
+import com.jairoavila.borutoapp.data.repository.RemoteDataSourceImpl
+import com.jairoavila.borutoapp.domain.repository.RemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +25,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import javax.inject.Singleton
 
+@ExperimentalPagingApi
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -66,6 +71,18 @@ object NetworkModule {
     @Singleton
     fun provideBorutoApi(ktorClient: HttpClient): BorutoApi {
         return BorutoApiImpl(client = ktorClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource(
+        borutoApi: BorutoApi,
+        borutoDatabase: BorutoDatabase
+    ): RemoteDataSource {
+        return RemoteDataSourceImpl(
+            borutoApi = borutoApi,
+            borutoDatabase = borutoDatabase
+        )
     }
 
 }
