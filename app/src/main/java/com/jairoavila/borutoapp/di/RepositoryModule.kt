@@ -4,6 +4,7 @@ import android.content.Context
 import com.jairoavila.borutoapp.data.pref.DataStoreOperationsImpl
 import com.jairoavila.borutoapp.data.repository.Repository
 import com.jairoavila.borutoapp.domain.repository.DataStoreOperations
+import com.jairoavila.borutoapp.domain.use_cases.GetAllHeroesUseCase
 import com.jairoavila.borutoapp.domain.use_cases.ReadOnBoardingUseCase
 import com.jairoavila.borutoapp.domain.use_cases.SaveOnBoardingUseCase
 import com.jairoavila.borutoapp.domain.use_cases.UseCases
@@ -29,7 +30,8 @@ object RepositoryModule {
     fun provideUseCases(repository: Repository): UseCases {
         return UseCases(
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
-            readOnBoardingUseCase = ReadOnBoardingUseCase(repository)
+            readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository)
         )
     }
 }
