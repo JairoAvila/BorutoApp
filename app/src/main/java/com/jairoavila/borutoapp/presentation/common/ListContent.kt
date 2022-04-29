@@ -1,7 +1,6 @@
 package com.jairoavila.borutoapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,15 +31,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.jairoavila.borutoapp.BuildConfig
 import com.jairoavila.borutoapp.R
 import com.jairoavila.borutoapp.domain.model.Hero
 import com.jairoavila.borutoapp.navigation.Screen
 import com.jairoavila.borutoapp.presentation.components.RatingWidget
+import com.jairoavila.borutoapp.presentation.components.ShimmerEffect
 import com.jairoavila.borutoapp.ui.theme.HERO_ITEM_HEIGHT
 import com.jairoavila.borutoapp.ui.theme.LARGE_PADDING
 import com.jairoavila.borutoapp.ui.theme.MEDIUM_PADDING
@@ -54,22 +54,45 @@ fun ListContent(
     heroes: LazyPagingItems<Hero>,
     navController: NavHostController
 ) {
-
-    if (BuildConfig.DEBUG) Log.d("ListContent", heroes.loadState.toString())
-
-    LazyColumn(
-        contentPadding = PaddingValues(all = SMALL_PADDING),
-        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
-    ) {
-        items(
-            items = heroes,
-            key = { hero ->
-                hero.id
+    val result = handlePagingResult(heroes = heroes)
+    if (result) {
+        LazyColumn(
+            contentPadding = PaddingValues(all = SMALL_PADDING),
+            verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+        ) {
+            items(
+                items = heroes,
+                key = { hero ->
+                    hero.id
+                }
+            ) { hero ->
+                hero?.let {
+                    HeroItem(hero = it, navController = navController)
+                }
             }
-        ) { hero ->
-            hero?.let {
-                HeroItem(hero = it, navController = navController)
+        }
+    }
+}
+
+@Composable
+fun handlePagingResult(
+    heroes: LazyPagingItems<Hero>
+): Boolean {
+    heroes.apply {
+        val error = when {
+            loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+            loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+            loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+            else -> null
+        }
+
+        return when {
+            loadState.refresh is LoadState.Loading -> {
+                ShimmerEffect()
+                false
             }
+            error != null -> false
+            else -> true
         }
     }
 }
