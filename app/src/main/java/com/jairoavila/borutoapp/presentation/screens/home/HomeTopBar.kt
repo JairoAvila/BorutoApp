@@ -1,4 +1,4 @@
-package com.jairoavila.borutoapp.presentation.home
+package com.jairoavila.borutoapp.presentation.screens.home
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

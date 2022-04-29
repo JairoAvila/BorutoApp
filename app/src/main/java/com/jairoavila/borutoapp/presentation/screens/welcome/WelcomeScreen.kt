@@ -1,4 +1,4 @@
-package com.jairoavila.borutoapp.presentation.welcome
+package com.jairoavila.borutoapp.presentation.screens.welcome
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

@@ -1,4 +1,4 @@
-package com.jairoavila.borutoapp.presentation.home
+package com.jairoavila.borutoapp.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import com.jairoavila.borutoapp.domain.use_cases.UseCases
