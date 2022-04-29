@@ -13,12 +13,12 @@ class BorutoApiImpl @Inject constructor(
 ) : BorutoApi {
 
     override suspend fun getAllHeroes(page: Int): ApiResponse =
-        client.get(urlBase) {
+        client.get("$urlBase/boruto/heroes") {
             parameter("page", page)
         }
 
     override suspend fun searchHeroes(name: String): ApiResponse =
-        client.get(urlBase) {
+        client.get("$urlBase/boruto/heroes/search") {
             parameter("name", name)
         }
 }
