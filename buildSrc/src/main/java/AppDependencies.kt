@@ -12,6 +12,7 @@ object AppDependencies {
 
     const val accompanistPager = "com.google.accompanist:accompanist-pager:${Versions.accompanist}"
     const val accompanistPagerIndicators = "com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}"
+    const val accompanistSwiperRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}"
 
     const val composeUI = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"

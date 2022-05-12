@@ -93,6 +93,9 @@ dependencies {
     implementation(AppDependencies.accompanistPager)
     implementation(AppDependencies.accompanistPagerIndicators)
 
+    // Swipe
+    implementation(AppDependencies.accompanistSwiperRefresh)
+
     // Test Libraries
     testImplementation(AppDependencies.junit)
     androidTestImplementation(AppDependencies.junitTest)
