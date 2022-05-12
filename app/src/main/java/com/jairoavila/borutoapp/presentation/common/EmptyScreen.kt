@@ -32,11 +32,19 @@ import androidx.paging.LoadState
 import com.jairoavila.borutoapp.R
 import com.jairoavila.borutoapp.ui.theme.NETWORK_ERROR_ICON_HEIGHT
 import com.jairoavila.borutoapp.ui.theme.SMALL_PADDING
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 @Composable
-fun EmptyScreen(error: LoadState.Error) {
-    val message by remember { mutableStateOf(parseErrorMessage(message = error.toString())) }
-    val icon by remember { mutableStateOf(R.drawable.ic_network_error) }
+fun EmptyScreen(error: LoadState.Error? = null) {
+    var message by remember { mutableStateOf("Find your favourite Hero") }
+    var icon by remember { mutableStateOf(R.drawable.ic_search_document) }
+
+    if (error != null) {
+        message = parseErrorMessage(error = error)
+        icon = R.drawable.ic_network_error
+    }
+
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim by animateFloatAsState(
         targetValue = if (startAnimation) ContentAlpha.disabled else 0f,
@@ -77,10 +85,10 @@ fun EmptyContent(alphaAnim: Float, icon: Int, message: String) {
     }
 }
 
-fun parseErrorMessage(message: String): String {
-    return when {
-        message.contains("SocketTimeoutException") -> "Server Unavailable"
-        message.contains("ConnectException") -> "Internet Unavailable"
+fun parseErrorMessage(error: LoadState.Error): String {
+    return when(error.error) {
+        is SocketTimeoutException -> "Server Unavailable"
+        is ConnectException -> "Internet Unavailable"
         else -> "Unknown Error"
     }
 }

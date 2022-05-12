@@ -7,6 +7,7 @@ import com.jairoavila.borutoapp.domain.repository.DataStoreOperations
 import com.jairoavila.borutoapp.domain.use_cases.GetAllHeroesUseCase
 import com.jairoavila.borutoapp.domain.use_cases.ReadOnBoardingUseCase
 import com.jairoavila.borutoapp.domain.use_cases.SaveOnBoardingUseCase
+import com.jairoavila.borutoapp.domain.use_cases.SearchHeroesUseCase
 import com.jairoavila.borutoapp.domain.use_cases.UseCases
 import dagger.Module
 import dagger.Provides
@@ -31,7 +32,8 @@ object RepositoryModule {
         return UseCases(
             saveOnBoardingUseCase = SaveOnBoardingUseCase(repository),
             readOnBoardingUseCase = ReadOnBoardingUseCase(repository),
-            getAllHeroesUseCase = GetAllHeroesUseCase(repository)
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository),
+            searchHeroesUseCase = SearchHeroesUseCase(repository)
         )
     }
 }
