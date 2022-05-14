@@ -1,6 +1,7 @@
 package com.jairoavila.borutoapp.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -16,6 +17,7 @@ import com.jairoavila.borutoapp.presentation.screens.splash.SplashScreen
 import com.jairoavila.borutoapp.presentation.screens.welcome.WelcomeScreen
 import com.jairoavila.borutoapp.util.Constants
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
@@ -39,12 +41,11 @@ fun SetupNavGraph(navController: NavHostController) {
             arguments = listOf(navArgument(Constants.DETAILS_ARGUMENT_KEY){
                 type = NavType.IntType
             })
-        ) {}
+        ) {
+            DetailScreen(navController = navController)
+        }
         composable(route = Screen.Search.route) {
             SearchScreen(navController = navController)
-        }
-        composable(route = Screen.Details.route) {
-            DetailScreen(navController = navController)
         }
     }
 }
