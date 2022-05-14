@@ -1,5 +1,6 @@
 package com.jairoavila.borutoapp.presentation.screens.detail
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.BottomSheetScaffoldState
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
@@ -24,6 +27,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,6 +43,8 @@ import com.jairoavila.borutoapp.R
 import com.jairoavila.borutoapp.domain.model.Hero
 import com.jairoavila.borutoapp.presentation.components.InfoBox
 import com.jairoavila.borutoapp.presentation.components.OrderedList
+import com.jairoavila.borutoapp.ui.theme.EXPANDED_RADIUS_LEVEL
+import com.jairoavila.borutoapp.ui.theme.EXTRA_LARGE_PADDING
 import com.jairoavila.borutoapp.ui.theme.INFO_ICON_SIZE
 import com.jairoavila.borutoapp.ui.theme.LARGE_PADDING
 import com.jairoavila.borutoapp.ui.theme.MEDIUM_PADDING
@@ -47,6 +53,7 @@ import com.jairoavila.borutoapp.ui.theme.SMALL_PADDING
 import com.jairoavila.borutoapp.ui.theme.titleColor
 import com.jairoavila.borutoapp.util.Constants.ABOUT_TEXT_MAX_LINES
 import com.jairoavila.borutoapp.util.Constants.BASE_URL
+import com.jairoavila.borutoapp.util.Constants.MIN_BACKGROUND_IMAGE_HEIGHT
 
 @ExperimentalMaterialApi
 @Composable
@@ -58,7 +65,21 @@ fun DetailsContent(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
     )
 
+    val currentSheetFraction = scaffoldState.currentSheetFraction
+
+    val radiusAnim by animateDpAsState(
+        targetValue =
+        if (currentSheetFraction == 1f)
+            EXTRA_LARGE_PADDING
+        else
+            EXPANDED_RADIUS_LEVEL
+    )
+
     BottomSheetScaffold(
+        sheetShape = RoundedCornerShape(
+            topStart = radiusAnim,
+            topEnd = radiusAnim
+        ),
         scaffoldState = scaffoldState,
         sheetPeekHeight = MIN_SHEET_HEIGHT,
         sheetContent = {
@@ -68,6 +89,7 @@ fun DetailsContent(
             selectedHero?.let { hero ->
                 BackgroundContent(
                     heroImage = hero.image,
+                    imageFraction = currentSheetFraction,
                     onCloseClicked = { navController.popBackStack() }
                 )
             }
@@ -198,7 +220,7 @@ fun BackgroundContent(
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight()
+                .fillMaxHeight(fraction = imageFraction + MIN_BACKGROUND_IMAGE_HEIGHT)
                 .align(Alignment.TopStart),
             painter = painter,
             contentDescription = stringResource(id = R.string.hero_image),
@@ -222,6 +244,22 @@ fun BackgroundContent(
         }
     }
 }
+
+@ExperimentalMaterialApi
+val BottomSheetScaffoldState.currentSheetFraction: Float
+    get() {
+        val fraction = bottomSheetState.progress.fraction
+        val targetValue = bottomSheetState.targetValue
+        val currentValue = bottomSheetState.currentValue
+
+        return when {
+            currentValue == BottomSheetValue.Collapsed && targetValue == BottomSheetValue.Collapsed -> 1f
+            currentValue == BottomSheetValue.Expanded && targetValue == BottomSheetValue.Expanded -> 0f
+            currentValue == BottomSheetValue.Collapsed && targetValue == BottomSheetValue.Expanded -> 1f - fraction
+            currentValue == BottomSheetValue.Expanded && targetValue == BottomSheetValue.Collapsed -> 0f + fraction
+            else -> fraction
+        }
+    }
 
 @Preview
 @Composable
