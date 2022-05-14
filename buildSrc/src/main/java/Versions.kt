@@ -22,6 +22,7 @@ object Versions {
     const val hilt = "2.41"
     const val hiltCompose = "1.0.0"
     const val coil = "1.4.0"
+    const val palette = "1.0.0"
 
     const val junit = "4.13.2"
     const val junitTest = "1.1.3"

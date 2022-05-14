@@ -96,6 +96,12 @@ dependencies {
     // Swipe
     implementation(AppDependencies.accompanistSwiperRefresh)
 
+    // Palette API
+    implementation(AppDependencies.palette)
+
+    // System UI Controller - Accompanist
+    implementation(AppDependencies.accompanistSystemUiController)
+
     // Test Libraries
     testImplementation(AppDependencies.junit)
     androidTestImplementation(AppDependencies.junitTest)
